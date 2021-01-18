@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from atf.ui import *
 
+
 class YandexImagesLocators(Page):
     """Взаимодействие с элементами страницы Яндекс.Картинки"""
 
