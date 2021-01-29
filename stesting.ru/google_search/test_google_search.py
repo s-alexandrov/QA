@@ -9,7 +9,7 @@ from selenium.webdriver.common.keys import Keys
 
 
 class YandexMailLogin(unittest.TestCase):
-    """Открываем главную струницу Яндекса и логинимся в почте"""
+    """Открываем главную страницу Google, выполняем поиск"""
 
     def setUp(self):
         self.driver = webdriver.Chrome()

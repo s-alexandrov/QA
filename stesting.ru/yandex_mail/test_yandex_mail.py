@@ -9,7 +9,7 @@ import time
 
 
 class YandexMailLogin(unittest.TestCase):
-    """Открываем главную струницу Яндекса и логинимся в почте"""
+    """Открываем главную страницу Яндекс, логинимся в почте"""
 
     def setUp(self):
         self.driver = webdriver.Chrome()
