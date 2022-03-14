@@ -20,10 +20,8 @@ def validate_json() -> Any:
             schema = json.load(file)
             validate(instance=input_json, schema=schema)
     except jsonschema.exceptions.ValidationError as err:
-        print("Ошибка валидации данных!")
-        return False
-    print("Валидация данных успешна!")
-    return True
+        return "Ошибка валидации данных!"
+    return "Валидация данных успешна!"
 
 
 def for_bd() -> Any:
