@@ -1,0 +1,185 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "examples": [
+        {
+            "id": 5,
+            "name": "NVIDIA GeForce RTX 3090",
+            "package_params": {
+                "type": "cardboard_box",
+                "width": 31,
+                "height": 14,
+                "depth": 10
+            },
+            "location_and_quantity": [
+                {
+                    "location": "Магазин БытЭлектроника на Мира 55",
+                    "amount": 1
+                },
+                {
+                    "location": "Магазин БытЭлектроника микрорайон Восточный",
+                    "amount": 2
+                }
+            ]
+        }
+    ],
+    "required": [
+        "id",
+        "name",
+        "package_params",
+        "location_and_quantity"
+    ],
+    "properties": {
+        "id": {
+            "$id": "#/properties/id",
+            "type": "integer",
+            "title": "The id schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+                5
+            ]
+        },
+        "name": {
+            "$id": "#/properties/name",
+            "type": "string",
+            "title": "The name schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "NVIDIA GeForce RTX 3090"
+            ]
+        },
+        "package_params": {
+            "$id": "#/properties/package_params",
+            "type": "object",
+            "title": "The package_params schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "type": "cardboard_box",
+                    "width": 31,
+                    "height": 14,
+                    "depth": 10
+                }
+            ],
+            "required": [
+                "type",
+                "width",
+                "height",
+                "depth"
+            ],
+            "properties": {
+                "type": {
+                    "$id": "#/properties/package_params/properties/type",
+                    "type": "string",
+                    "title": "The type schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "cardboard_box"
+                    ]
+                },
+                "width": {
+                    "$id": "#/properties/package_params/properties/width",
+                    "type": "integer",
+                    "title": "The width schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        31
+                    ]
+                },
+                "height": {
+                    "$id": "#/properties/package_params/properties/height",
+                    "type": "integer",
+                    "title": "The height schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        14
+                    ]
+                },
+                "depth": {
+                    "$id": "#/properties/package_params/properties/depth",
+                    "type": "integer",
+                    "title": "The depth schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        10
+                    ]
+                }
+            },
+            "additionalProperties": true
+        },
+        "location_and_quantity": {
+            "$id": "#/properties/location_and_quantity",
+            "type": "array",
+            "title": "The location_and_quantity schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": [],
+            "examples": [
+                [
+                    {
+                        "location": "Магазин БытЭлектроника на Мира 55",
+                        "amount": 1
+                    },
+                    {
+                        "location": "Магазин БытЭлектроника микрорайон Восточный",
+                        "amount": 2
+                    }
+                ]
+            ],
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/location_and_quantity/items",
+                "anyOf": [
+                    {
+                        "$id": "#/properties/location_and_quantity/items/anyOf/0",
+                        "type": "object",
+                        "title": "The first anyOf schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": {},
+                        "examples": [
+                            {
+                                "location": "Магазин БытЭлектроника на Мира 55",
+                                "amount": 1
+                            }
+                        ],
+                        "required": [
+                            "location",
+                            "amount"
+                        ],
+                        "properties": {
+                            "location": {
+                                "$id": "#/properties/location_and_quantity/items/anyOf/0/properties/location",
+                                "type": "string",
+                                "title": "The location schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "Магазин БытЭлектроника на Мира 55"
+                                ]
+                            },
+                            "amount": {
+                                "$id": "#/properties/location_and_quantity/items/anyOf/0/properties/amount",
+                                "type": "integer",
+                                "title": "The amount schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": 0,
+                                "examples": [
+                                    1
+                                ]
+                            }
+                        },
+                        "additionalProperties": true
+                    }
+                ]
+            }
+        }
+    },
+    "additionalProperties": true
+}

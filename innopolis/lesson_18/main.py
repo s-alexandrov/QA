@@ -12,7 +12,6 @@ def unit_search(crators_array: list, x: int, y: int) -> None:
 def calculate(crators_array: list) -> int:
     """Определяем число краторов на луне."""
     count = 0
-    # TODO Карта луны не обязательно должна быть квадраной, ширина может отличаться от длины
     for i in range(len(crators_array)):
         for j in range(len(crators_array[i])):
             if crators_array[i][j] == 1:
