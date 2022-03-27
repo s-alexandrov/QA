@@ -22,7 +22,13 @@ class Game:
         self.sword_item = 0
         self.bow_item = 0
         self.book_magic_item = 0
+        self.totem_item = 0
         self.inventory = {}
+        # self.itemsword = ItemSword(self)
+        # self.itemtotem = ItemTotem(self)
+        # self.itembookmagic = ItemBookMagic(self)
+        # self.itemarrows = ItemArrows(self)
+        # self.itembow = ItemBow(self)
 
     def begin_game(self) -> Any:
         """Запуск игры."""
@@ -90,6 +96,19 @@ class Game:
         else:
             print("Вы ввели некорректное число, попробуйте еще раз.")
             self.response_to_item()
+
+    # def take_item(self) -> None:
+    #     """Взять предмет в инвентарь."""
+    #     if self.item_type == "тотем":
+    #         self.itemtotem.take_item()
+    #     if self.item_type == "лук":
+    #         self.itembow.take_item()
+    #     if self.item_type == "стрелы":
+    #         self.itemarrows.take_item()
+    #     if self.item_type == "меч":
+    #         self.itemsword.take_item()
+    #     if self.item_type == "книга магии":
+    #         self.itembookmagic.take_item()
 
     def run(self) -> None:
         """Побег от монстра."""
@@ -301,7 +320,7 @@ class ItemArrows(Items):
     def spawn(self) -> None:
         print(f"Вы нашли стрелы({self.amount} шт). Сила атаки одной стрелы {self.power}")
 
-    def arrows_item(self) -> None:
+    def take_item(self) -> None:
         print("Вы положили предмет в инвентарь.")
         self.game.bow_item = self.amount
         self.game.item_spawner()
@@ -339,6 +358,7 @@ class ItemApple(Items):
         print("Вы съели яблокочко.")
         pass
 
+
 class ItemTotem(Items):
     """Класс тотема."""
     def __init__(self, game: Any) -> None:
@@ -347,6 +367,11 @@ class ItemTotem(Items):
 
     def spawn(self) -> None:
         print(f"Вы нашли тотем и могли бы сохранить игру, но автор пока не придумал как это сделать. =)")
+
+    def take_item(self) -> None:
+        print("Вы положили предмет в инвентарь.")
+        self.game.totem_item = 1
+        self.game.item_spawner()
 
 
 class ItemsFactory(ABC):
