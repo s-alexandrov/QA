@@ -8,6 +8,8 @@ class Game:
     hero_character = ""
     hero_attack = 10
     hero_hp = 15
+    item_type = ""
+    inventory = {}
 
     def __init__(self) -> None:
         self.monster_count = 0
@@ -16,6 +18,11 @@ class Game:
         self.hero_hp = 15
         self.monster_attack = 0
         self.monster_hp = 0
+        self.item_type = ""
+        self.sword_item = 0
+        self.bow_item = 0
+        self.book_magic_item = 0
+        self.inventory = {}
 
     def begin_game(self) -> Any:
         """Запуск игры."""
@@ -72,9 +79,21 @@ class Game:
             print("Вы ввели некорректное число, попробуйте еще раз.")
             self.response_to_monster()
 
+    def response_to_item(self) -> None:
+        """Реакция героя на появления предмета."""
+        print("Вы можете взять предмет (1) или пройти мимо (2).")
+        input_response_to_item = input()
+        if input_response_to_item == "1":
+            print("Вы взяли предмет.")
+        elif input_response_to_item == "2":
+            self.run()
+        else:
+            print("Вы ввели некорректное число, попробуйте еще раз.")
+            self.response_to_item()
+
     def run(self) -> None:
         """Побег от монстра."""
-        print("Вы сбежали от монстра! Продолжаем.")
+        print("Вы прошли мимо! Продолжаем.")
         self.item_spawner()
 
     def monster_spawner(self) -> None:
@@ -234,6 +253,11 @@ class Items(ABC):
         """Пораждение монстра. Метод, наличие которого обязательно у всех."""
         print("Вы получили предмет!")
 
+    @abstractmethod
+    def take_item(self) -> None:
+        """Берем игровой предмет в инвентарь. Метод, наличие которого обязательно у всех."""
+        print("Вы взяли предмет!")
+
 
 class ItemSword(Items):
     """Класс меча."""
@@ -245,6 +269,11 @@ class ItemSword(Items):
     def spawn(self) -> None:
         print(f"Мы нашли меч с силой атаки {self.power}")
 
+    def take_item(self) -> None:
+        print("Вы положили предмет в инвентарь.")
+        self.game.sword_item = 1
+        self.game.item_spawner()
+
 
 class ItemBow(Items):
     """Класс лука."""
@@ -254,6 +283,11 @@ class ItemBow(Items):
 
     def spawn(self) -> None:
         print(f"Вы нашли лук. Не забудьте найти стрелы к нему.")
+
+    def take_item(self) -> None:
+        print("Вы положили предмет в инвентарь.")
+        self.game.bow_item = 1
+        self.game.item_spawner()
 
 
 class ItemArrows(Items):
@@ -267,6 +301,11 @@ class ItemArrows(Items):
     def spawn(self) -> None:
         print(f"Вы нашли стрелы({self.amount} шт). Сила атаки одной стрелы {self.power}")
 
+    def arrows_item(self) -> None:
+        print("Вы положили предмет в инвентарь.")
+        self.game.bow_item = self.amount
+        self.game.item_spawner()
+
 
 class ItemBookMagic(Items):
     """Класс книги заклинаний."""
@@ -277,6 +316,11 @@ class ItemBookMagic(Items):
 
     def spawn(self) -> None:
         print(f"Вы нашли книгу заклинаний с силой атаки {self.power}")
+
+    def take_item(self) -> None:
+        print("Вы положили предмет в инвентарь.")
+        self.game.book_magic_item = 1
+        self.game.item_spawner()
 
 
 class ItemApple(Items):
@@ -291,6 +335,9 @@ class ItemApple(Items):
         print(f"Вы нашли яблочко, ваше hp увеличислось на {self.apple_hp} и теперь = {self.game.hero_hp}")
         self.game.item_spawner()
 
+    def take_item(self) -> None:
+        print("Вы съели яблокочко.")
+        pass
 
 class ItemTotem(Items):
     """Класс тотема."""
@@ -322,6 +369,7 @@ class SwordFactory(ItemsFactory):
         super().__init__(self.game)
 
     def create_items(self) -> None:
+        self.game.item_type = "меч"
         power = random.randint(5, 20)
         if self.game.hero_character == "berserk":
             power += 5
@@ -336,6 +384,7 @@ class BowFactory(ItemsFactory):
         super().__init__(self.game)
 
     def create_items(self) -> None:
+        self.game.item_type = "лук"
         bow = ItemBow(self.game)
         bow.spawn()
 
@@ -347,6 +396,7 @@ class ArrowsFactory(ItemsFactory):
         super().__init__(self.game)
 
     def create_items(self) -> None:
+        self.game.item_type = "стрелы"
         amount = random.randint(1, 5)
         power = random.randint(5, 20)
         if self.game.hero_character == "archer":
@@ -362,6 +412,7 @@ class BookMagicFactory(ItemsFactory):
         super().__init__(self.game)
 
     def create_items(self) -> None:
+        self.game.item_type = "книга магии"
         power = random.randint(5, 20)
         if self.game.hero_character == "wizard":
             power += 5
