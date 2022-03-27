@@ -6,12 +6,14 @@ from abc import ABC, abstractmethod
 class Game:
     """Главный класс игры."""
     hero_character = ""
+    hero_attack = 10
+    hero_hp = 15
 
     def __init__(self) -> None:
         self.monster_count = 0
         self.hero_character = ""
-        self.hero_attack = 0
-        self.hero_hp = 0
+        self.hero_attack = 10
+        self.hero_hp = 15
         self.monster_attack = 0
         self.monster_hp = 0
 
@@ -29,15 +31,18 @@ class Game:
         print("Выбирите тип героя: 1 - воин, 2 - лучник, 3 - маг")
         hero_input = input()
         if hero_input == "1":
-            print("Теперь вы воин мечник!")
+            print(f"Теперь вы воин мечник! Ваша атака = {self.hero_attack} и hp = {self.hero_hp}. "
+                  f"Ваше оружие в начале игры - меч.")
             self.hero_character = "berserk"
             self.item_spawner()
         elif hero_input == "2":
-            print("Теперь вы лучник!")
+            print(f"Теперь вы лучник! Ваша атака = {self.hero_attack} и hp = {self.hero_hp}. "
+                  f"Ваше оружие в начале игры - меч.")
             self.hero_character = "archer"
             self.item_spawner()
         elif hero_input == "3":
-            print("Теперь вы маг!")
+            print(f"Теперь вы маг! Ваша атака = {self.hero_attack} и hp = {self.hero_hp}. "
+                  f"Ваше оружие в начале игры - меч.")
             self.hero_character = "wizard"
             self.item_spawner()
         else:
@@ -47,13 +52,30 @@ class Game:
     def item_spawner(self) -> None:
         """Рандом игровых процессов."""
         random_spawner = random.randint(1, 2)
-        print("Рандом монстр(1) или предмет(2)", random_spawner)
         if random_spawner == 1:
-            self.monster_spawner()
+            self.monster_spawner()  # Вызывам монстра
+            self.response_to_monster()  # После появления монстра решаем атаковать или бежать
         elif random_spawner == 2:
-            self.object_spawner()
+            self.object_spawner()  # Вызываем предмет
         else:
             print("Вы ввели неправильное число, можно только 1 или 2")
+
+    def response_to_monster(self) -> None:
+        """Реакция героя на появления монстра."""
+        print("Вы можете атаковать его (1) или убежать (2).")
+        input_response_to_monster = input()
+        if input_response_to_monster == "1":
+            print("Вы решили атаковать.")
+        elif input_response_to_monster == "2":
+            self.run()
+        else:
+            print("Вы ввели некорректное число, попробуйте еще раз.")
+            self.response_to_monster()
+
+    def run(self) -> None:
+        """Побег от монстра."""
+        print("Вы сбежали от монстра! Продолжаем.")
+        self.item_spawner()
 
     def monster_spawner(self) -> None:
         """Рандом монстров."""
@@ -88,6 +110,7 @@ class Monsters(ABC):
         """Инициализация класса."""
         super().__init__()
         self.game = game
+
 
     @abstractmethod
     def spawn(self) -> None:
@@ -258,13 +281,15 @@ class ItemBookMagic(Items):
 
 class ItemApple(Items):
     """Класс яблочка."""
-    def __init__(self, game: Any, apple_hp: int) -> None:
+    def __init__(self, game: Any, apple_hp: int, hero_hp: int) -> None:
         self.game = game
         super().__init__(self.game)
         self.apple_hp = apple_hp
+        self.game.hero_hp = hero_hp
 
     def spawn(self) -> None:
-        print(f"Вы нашли яблочко, ваше hp увеличислось на {self.apple_hp}")
+        print(f"Вы нашли яблочко, ваше hp увеличислось на {self.apple_hp} и теперь = {self.game.hero_hp}")
+        self.game.item_spawner()
 
 
 class ItemTotem(Items):
@@ -352,7 +377,8 @@ class AppleFactory(ItemsFactory):
 
     def create_items(self) -> None:
         apple_hp = random.randint(1, 10)
-        apple = ItemApple(self.game, apple_hp)
+        self.game.hero_hp += apple_hp
+        apple = ItemApple(self.game, apple_hp, self.game.hero_hp)
         apple.spawn()
 
 
