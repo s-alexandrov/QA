@@ -24,11 +24,11 @@ class Game:
         self.book_magic_item = 0
         self.totem_item = 0
         self.inventory = {}
-        # self.itemsword = ItemSword(self)
-        # self.itemtotem = ItemTotem(self)
-        # self.itembookmagic = ItemBookMagic(self)
-        # self.itemarrows = ItemArrows(self)
-        # self.itembow = ItemBow(self)
+        self.itemsword = ItemSword
+        self.itemtotem = ItemTotem
+        self.itembookmagic = ItemBookMagic
+        self.itemarrows = ItemArrows
+        self.itembow = ItemBow
 
     def begin_game(self) -> Any:
         """Запуск игры."""
@@ -70,6 +70,7 @@ class Game:
             self.response_to_monster()  # После появления монстра решаем атаковать или бежать
         elif random_spawner == 2:
             self.object_spawner()  # Вызываем предмет
+            self.response_to_item()  # После появления предмета решаем взять его или нет
         else:
             print("Вы ввели неправильное число, можно только 1 или 2")
 
@@ -78,7 +79,8 @@ class Game:
         print("Вы можете атаковать его (1) или убежать (2).")
         input_response_to_monster = input()
         if input_response_to_monster == "1":
-            print("Вы решили атаковать.")
+            print("Вы решили атаковать. Но автор еще пока не придумал как реализовать бой. Поэтому начинаем заново. =)")
+            self.item_spawner()
         elif input_response_to_monster == "2":
             self.run()
         else:
@@ -91,24 +93,25 @@ class Game:
         input_response_to_item = input()
         if input_response_to_item == "1":
             print("Вы взяли предмет.")
+            self.take_item()
         elif input_response_to_item == "2":
             self.run()
         else:
             print("Вы ввели некорректное число, попробуйте еще раз.")
             self.response_to_item()
 
-    # def take_item(self) -> None:
-    #     """Взять предмет в инвентарь."""
-    #     if self.item_type == "тотем":
-    #         self.itemtotem.take_item()
-    #     if self.item_type == "лук":
-    #         self.itembow.take_item()
-    #     if self.item_type == "стрелы":
-    #         self.itemarrows.take_item()
-    #     if self.item_type == "меч":
-    #         self.itemsword.take_item()
-    #     if self.item_type == "книга магии":
-    #         self.itembookmagic.take_item()
+    def take_item(self) -> None:
+        """Взять предмет в инвентарь."""
+        if self.item_type == "тотем":
+            self.itemtotem.take_item()
+        if self.item_type == "лук":
+            self.itembow.take_item()
+        if self.item_type == "стрелы":
+            self.itemarrows.take_item()
+        if self.item_type == "меч":
+            self.itemsword.take_item()
+        if self.item_type == "книга магии":
+            self.itembookmagic.take_item()
 
     def run(self) -> None:
         """Побег от монстра."""
@@ -291,6 +294,7 @@ class ItemSword(Items):
     def take_item(self) -> None:
         print("Вы положили предмет в инвентарь.")
         self.game.sword_item = 1
+        print("Кол-во предметов ", self.game.sword_item)
         self.game.item_spawner()
 
 
@@ -306,6 +310,7 @@ class ItemBow(Items):
     def take_item(self) -> None:
         print("Вы положили предмет в инвентарь.")
         self.game.bow_item = 1
+        print("Кол-во предметов ", self.game.bow_item)
         self.game.item_spawner()
 
 
@@ -323,6 +328,7 @@ class ItemArrows(Items):
     def take_item(self) -> None:
         print("Вы положили предмет в инвентарь.")
         self.game.bow_item = self.amount
+        print("Кол-во предметов ", self.game.bow_item)
         self.game.item_spawner()
 
 
@@ -339,6 +345,7 @@ class ItemBookMagic(Items):
     def take_item(self) -> None:
         print("Вы положили предмет в инвентарь.")
         self.game.book_magic_item = 1
+        print("Кол-во предметов ", self.game.book_magic_item)
         self.game.item_spawner()
 
 
@@ -352,7 +359,7 @@ class ItemApple(Items):
 
     def spawn(self) -> None:
         print(f"Вы нашли яблочко, ваше hp увеличислось на {self.apple_hp} и теперь = {self.game.hero_hp}")
-        self.game.item_spawner()
+        # self.game.item_spawner()
 
     def take_item(self) -> None:
         print("Вы съели яблокочко.")
@@ -371,6 +378,7 @@ class ItemTotem(Items):
     def take_item(self) -> None:
         print("Вы положили предмет в инвентарь.")
         self.game.totem_item = 1
+        print("Кол-во предметов ", self.game.totem_item)
         self.game.item_spawner()
 
 
