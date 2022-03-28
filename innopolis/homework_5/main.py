@@ -108,15 +108,21 @@ class Game:
 
     def take_item(self) -> None:
         """Взять предмет в инвентарь."""
+        print("Вызвался take_item в game", self.item_type)
         if self.item_type == "тотем":
+            print(self.item_type)
             self.itemtotem.take_item()
-        if self.item_type == "лук":
+        elif self.item_type == "лук":
+            print(self.item_type)
             self.itembow.take_item()
-        if self.item_type == "стрелы":
+        elif self.item_type == "стрелы":
+            print(self.item_type)
             self.itemarrows.take_item()
-        if self.item_type == "меч":
+        elif self.item_type == "меч":
+            print(self.item_type)
             self.itemsword.take_item()
-        if self.item_type == "книга магии":
+        elif self.item_type == "книга магии":
+            print(self.item_type)
             self.itembookmagic.take_item()
 
     def run(self) -> None:
@@ -279,7 +285,7 @@ class Items(ABC):
     @abstractmethod
     def spawn(self) -> None:
         """Пораждение монстра. Метод, наличие которого обязательно у всех."""
-        print("Вы получили предмет!")
+        print("Вы нашли предмет!")
 
     @abstractmethod
     def take_item(self) -> None:
