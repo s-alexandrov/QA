@@ -9,7 +9,10 @@ class Game:
     hero_attack = 10
     hero_hp = 15
     item_type = ""
-    inventory = {}
+    sword_power = 0  # атака меча
+    book_magic_power = 0  # атака магии
+    arrows_amount = 0  # кол-во стрел
+    arrows_power = 0  # атака стрелы
 
     def __init__(self) -> None:
         self.monster_count = 0
@@ -23,12 +26,15 @@ class Game:
         self.bow_item = 0
         self.book_magic_item = 0
         self.totem_item = 0
-        self.inventory = {}
-        self.itemsword = ItemSword
-        self.itemtotem = ItemTotem
-        self.itembookmagic = ItemBookMagic
-        self.itemarrows = ItemArrows
-        self.itembow = ItemBow
+        self.sword_power = 0  # атака меча
+        self.book_magic_power = 0  # атака магии
+        self.arrows_amount = 0  # кол-во стрел
+        self.arrows_power = 0  # атака стрелы
+        self.itemsword = ItemSword(self, self.sword_power)
+        self.itemtotem = ItemTotem(self)
+        self.itembookmagic = ItemBookMagic(self, self.book_magic_power)
+        self.itemarrows = ItemArrows(self, self.arrows_amount, self.arrows_power)
+        self.itembow = ItemBow(self)
 
     def begin_game(self) -> Any:
         """Запуск игры."""
@@ -295,6 +301,7 @@ class ItemSword(Items):
         print("Вы положили предмет в инвентарь.")
         self.game.sword_item = 1
         print("Кол-во предметов ", self.game.sword_item)
+        self.game.sword_power = self.power
         self.game.item_spawner()
 
 
@@ -329,6 +336,8 @@ class ItemArrows(Items):
         print("Вы положили предмет в инвентарь.")
         self.game.bow_item = self.amount
         print("Кол-во предметов ", self.game.bow_item)
+        self.game.arrows_amount = self.amount
+        self.game.arrows_power = self.power
         self.game.item_spawner()
 
 
@@ -346,6 +355,7 @@ class ItemBookMagic(Items):
         print("Вы положили предмет в инвентарь.")
         self.game.book_magic_item = 1
         print("Кол-во предметов ", self.game.book_magic_item)
+        self.game.book_magic_power = self.power
         self.game.item_spawner()
 
 
