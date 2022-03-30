@@ -1,5 +1,4 @@
 from flask import request, Flask, Response
-from sqlalchemy.orm import sessionmaker
 from homework_6.models.drivers import Drivers
 
 app = Flask(__name__)
