@@ -35,6 +35,26 @@ class Clients(Base):
             self.name,
             self.is_vip)
 
+    @contextmanager
+    def get_client(self, client_id):
+        """Запрос по id водителя."""
+        with session_scope() as session:
+            new_client = session.query(Clients).get(client_id)
+            return new_client
+
+    def create_client(self):
+        """Создание водителя."""
+        with session_scope() as session:
+            session.add(self)
+            session.commit()
+
+    @contextmanager
+    def delete_client(self, client_id):
+        """Удаление водителя по id"""
+        with session_scope() as session:
+            session.query(Clients).filter(Clients.id == "client_id").delete()
+            session.commit()
+
 
 # создание таблиц если они не существуют
 Base.metadata.create_all(engine)
