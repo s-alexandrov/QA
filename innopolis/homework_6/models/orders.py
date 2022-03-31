@@ -52,6 +52,21 @@ class Orders(Base):
             self.date_created.strftime("%d-%b-%Y"),
             self.status)
 
+    @contextmanager
+    def get_order(self, order_id):
+        """Запрос по id заказа."""
+        with session_scope() as session:
+            new_order = session.query(Orders).get(order_id)
+            return new_order
+
+    @contextmanager
+    def get_status_order(self, order_id):
+        """Запрос получения информации по заказу"""
+        with session_scope() as session:
+            status_order = session.query(Orders.status).filter(Orders.id=order_id).all()
+            return status_order
+
+
 
 # создание таблиц если они не существуют
 Base.metadata.create_all(engine)
