@@ -3,6 +3,15 @@ from homework_6.models.drivers import Drivers
 
 app = Flask(__name__)
 
+drivers_json_schema = {
+    "type": "object",
+    "required": ["name", "car"],
+    "additionalProperties": False,
+    "properties": {
+        "name": {"type": "string", "minLength": 2},
+        "car": {"type": "string", "minLength": 2},
+    },
+}
 
 @app.route("/drivers", methods=['POST'])
 def create_driver():

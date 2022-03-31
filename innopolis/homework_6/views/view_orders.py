@@ -3,6 +3,22 @@ from homework_6.models.orders import Orders
 
 app = Flask(__name__)
 
+orders_json_schema = {
+    "type": "object",
+    "required": ["client_id", "driver_id", "date_created", "status", "address_from", "address_to"],
+    "additionalProperties": False,
+    "properties": {
+        "client_id": {"type": "integer"},
+        "driver_id": {"type": "integer"},
+        "date_created": {"type": "string", "format": "date-time"},
+        "status": {
+            "type": "string",
+            "enum": ["not_accepted", "in_progress", "done", "cancelled"],
+        },
+        "address_from": {"type": "string", "minLength": 1},
+        "address_to": {"type": "string", "minLength": 1},
+    },
+}
 
 @app.route("/orders", methods=["POST"])
 def create_order():
@@ -28,8 +44,6 @@ def create_order():
 def find_orders():
     """Поиск заказа."""
     orders = Orders
-    try:
-        response = orders
 
 
 @app.route("/orders/<order_id>", methods=["PUT"])

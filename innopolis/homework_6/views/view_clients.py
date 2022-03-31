@@ -3,6 +3,16 @@ from homework_6.models.clients import Clients
 
 app = Flask(__name__)
 
+clients_json_schema = {
+    "type": "object",
+    "required": ["name", "is_vip"],
+    "additionalProperties": False,
+    "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "is_vip": {"type": "boolean"},
+    },
+}
+
 
 @app.route("/clients", methods=["POST"])
 def create_clients():
