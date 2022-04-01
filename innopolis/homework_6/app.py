@@ -11,4 +11,4 @@ migrate = Migrate(app, db)
 
 @app.route('/')
 def hello():
-    return 'Onyx.Taxi!'
+    return 'Welcome! Onyx.Taxi!'

@@ -61,16 +61,23 @@ class Orders(Base):
 
     @contextmanager
     def get_status_order(self, order_id):
-        """Запрос получения информации по заказу"""
+        """Запрос получения информации по заказу."""
         with session_scope() as session:
-            status_order = session.query(Orders.status).filter(Orders.id=order_id).all()
+            status_order = session.query(Orders).filter(Orders.status == order_id).all()
             return status_order
 
+    def create_order(self):
+        """Создание заказа."""
+        with session_scope() as session:
+            session.add(self)
+            session.commit()
+
+    @contextmanager
+    def status_order(self, order_id, new_order_id):
+        """Статус заказа."""
+        with session_scope() as session:
+            session.query(Orders).filter(Orders.status == order_id).update({Orders.status: new_order_id})
+            session.commit()
 
 
-# создание таблиц если они не существуют
 Base.metadata.create_all(engine)
-
-# создание новой сессии, для выполнения действий
-Session = sessionmaker(bind=engine)
-session = Session()

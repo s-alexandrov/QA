@@ -13,6 +13,7 @@ drivers_json_schema = {
     },
 }
 
+
 @app.route("/drivers", methods=['POST'])
 def create_driver():
     """Создание водителя."""

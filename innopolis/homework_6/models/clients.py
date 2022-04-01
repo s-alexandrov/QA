@@ -56,9 +56,4 @@ class Clients(Base):
             session.commit()
 
 
-# создание таблиц если они не существуют
 Base.metadata.create_all(engine)
-
-# создание новой сессии, для выполнения действий
-Session = sessionmaker(bind=engine)
-session = Session()

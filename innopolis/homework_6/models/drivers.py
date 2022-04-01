@@ -56,5 +56,5 @@ class Drivers(Base):
             session.query(Drivers).filter(Drivers.id == "drivers_id").delete()
             session.commit()
 
-# создание таблиц если они не существуют
+
 Base.metadata.create_all(engine)
