@@ -1,0 +1,18 @@
+[
+    {
+        "node_id" : "2f3ccebc-d3e7-4ac1-99bb-bb821104155e",
+        "node_connections_list" : ["3c903239-4fc5-42df-8580-526d4ddd4bae", "0c21a78a-c9b9-4200-b4bf-f67e6d7aaafd", "4647cca2-543a-4ca0-b95d-3266d01c6781"]
+    },
+    {
+        "node_id" : "3c903239-4fc5-42df-8580-526d4ddd4bae",
+        "node_connections_list" : ["2f3ccebc-d3e7-4ac1-99bb-bb821104155e", "0c21a78a-c9b9-4200-b4bf-f67e6d7aaafd"]
+    },
+    {
+        "node_id" : "0c21a78a-c9b9-4200-b4bf-f67e6d7aaafd",
+        "node_connections_list" : ["2f3ccebc-d3e7-4ac1-99bb-bb821104155e", "3c903239-4fc5-42df-8580-526d4ddd4bae", "4647cca2-543a-4ca0-b95d-3266d01c6781"]
+    },
+    {
+        "node_id" : "4647cca2-543a-4ca0-b95d-3266d01c6781",
+        "node_connections_list" : ["2f3ccebc-d3e7-4ac1-99bb-bb821104155e", "0c21a78a-c9b9-4200-b4bf-f67e6d7aaafd"]
+    }
+]
